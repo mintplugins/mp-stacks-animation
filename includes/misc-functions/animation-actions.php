@@ -53,16 +53,14 @@ add_filter('mp_brick_background_content', 'mp_stacks_animation_animate_backgroun
  */
 function mp_stacks_animation_animate_content_types( $default_content_output, $mp_stacks_content_type, $post_id ){
 	
-	global $mp_stacks_animation_ct_number;
+	global $mp_stacks_animation_ct_number, $mp_stacks_footer_inline_js;
 	
 	//If this is Content Type 1
 	if ( empty( $mp_stacks_animation_ct_number[$post_id] ) ){
 		$mp_stacks_animation_ct_number[$post_id] = 1;	
 		
-		$animation_js_output = NULL;
-		
 		//Disable any Shadows because they lag in the browser
-		$animation_js_output .= '
+		$mp_stacks_footer_inline_js .= '
 		<script type="text/javascript">
 							
 			jQuery(document).ready(function($){ 
@@ -108,7 +106,7 @@ function mp_stacks_animation_animate_content_types( $default_content_output, $mp
 			$reverse_upon_out_of_view = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct1_waypoint_animation_reverse_upon_out', false );
 			
 			//Get JS output to animate this content type upon page load
-			$animation_js_output .= mp_core_js_waypoint_animate_child( '#mp-brick-' . $post_id , '.mp-brick-content-type-container:first-child', $waypoint_animation_repeater, $reverse_upon_out_of_view ); 
+			$mp_stacks_footer_inline_js .= mp_core_js_waypoint_animate( '#mp-brick-' . $post_id . '-first-content-type-container', $waypoint_animation_repeater, $reverse_upon_out_of_view ); 
 		}
 		
 		//Check if this brick is set to have Content-Type 1's MouseOver animation "on"
@@ -119,20 +117,18 @@ function mp_stacks_animation_animate_content_types( $default_content_output, $mp
 			$mouseover_animation_repeater = mp_core_get_post_meta( $post_id, 'ct1_mouseover_animation_keyframes', array() );
 					
 			//Get JS output to animate this content type upon page load
-			$animation_js_output .= mp_core_js_mouse_over_animate( '#mp-brick-' . $post_id .' .mp-brick-content-type-container:first-child', $mouseover_animation_repeater ); 
+			$mp_stacks_footer_inline_js .= mp_core_js_mouse_over_animate( '#mp-brick-' . $post_id . '-first-content-type-container', $mouseover_animation_repeater ); 
 		}
 		
-		return $default_content_output . $animation_js_output;
+		return $default_content_output;
 		
 	}
 	//If this is Content Type 2
 	else{
 		$mp_stacks_animation_ct_number[$post_id] = 2;	
-		
-		$animation_js_output = NULL;
-		
+				
 		//Disable any Shadows because they lag in the browser
-		$animation_js_output .= '
+		$mp_stacks_footer_inline_js .= '
 		<script type="text/javascript">
 							
 			jQuery(document).ready(function($){ 
@@ -179,7 +175,7 @@ function mp_stacks_animation_animate_content_types( $default_content_output, $mp
 			$reverse_upon_out_of_view = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct2_waypoint_animation_reverse_upon_out', false );
 						
 			//Get JS output to animate this content type upon page load
-			$animation_js_output .= mp_core_js_waypoint_animate_child( '#mp-brick-' . $post_id , '.mp-brick-content-type-container:nth-child(2)', $waypoint_animation_repeater, $reverse_upon_out_of_view ); 
+			$mp_stacks_footer_inline_js .= mp_core_js_waypoint_animate( '#mp-brick-' . $post_id . '-second-content-type-container', $waypoint_animation_repeater, $reverse_upon_out_of_view ); 
 		
 		}
 		
@@ -191,10 +187,10 @@ function mp_stacks_animation_animate_content_types( $default_content_output, $mp
 			$mouseover_animation_repeater = mp_core_get_post_meta( $post_id, 'ct2_mouseover_animation_keyframes', array() );
 					
 			//Get JS output to animate this content type upon page load
-			$animation_js_output .= mp_core_js_mouse_over_animate( '#mp-brick-' . $post_id .' .mp-brick-content-type-container:nth-child(2)', $mouseover_animation_repeater ); 
+			$mp_stacks_footer_inline_js .= mp_core_js_mouse_over_animate( '#mp-brick-' . $post_id . '-second-content-type-container', $mouseover_animation_repeater ); 
 		}
 		
-		return $default_content_output . $animation_js_output;
+		return $default_content_output;
 		
 	}
 		
