@@ -11,7 +11,7 @@ Domain Path: languages
 License: GPL2
 */
 
-/*  Copyright 2014  Phil Johnston  (email : phil@mintplugins.com)
+/*  Copyright 2015  Phil Johnston  (email : phil@mintplugins.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -158,7 +158,7 @@ function mp_stacks_animation_include_files(){
 		/**
 		 * Enqueue Scripts
 		 */
-		require( MP_STACKS_ANIMATION_PLUGIN_DIR . 'includes/misc-functions/enqueue-scripts.php' );
+		//require( MP_STACKS_ANIMATION_PLUGIN_DIR . 'includes/misc-functions/admin-enqueue-scripts.php' );
 		
 		/**
 		 * Filters which modify the image on output
