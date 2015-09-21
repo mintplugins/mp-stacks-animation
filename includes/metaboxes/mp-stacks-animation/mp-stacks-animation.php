@@ -22,16 +22,16 @@
  * @return   void
  */
 function mp_stacks_animation_create_meta_box(){	
-
+	
 	//Array which stores all info about the new metabox
 	$mp_stacks_animation_add_meta_box = array(
 		'metabox_id' => 'mp_stacks_animation_metabox', 
 		'metabox_title' => __( 'Animation Settings', 'mp_stacks'), 
 		'metabox_posttype' => 'mp_brick', 
 		'metabox_context' => 'side', 
-		'metabox_priority' => 'low' 
+		'metabox_priority' => 'low' ,
+		'metabox_load_content_when_opened' => true
 	);
-	
 	
 	//Array which stores all info about the options within the metabox
 	$mp_stacks_animation_items_array = array(
@@ -588,4 +588,5 @@ function mp_stacks_animation_create_meta_box(){
 	global $mp_stacks_animation_meta_box;
 	$mp_stacks_animation_meta_box = new MP_CORE_Metabox($mp_stacks_animation_add_meta_box, $mp_stacks_animation_items_array);
 }
-add_action('mp_brick_metabox', 'mp_stacks_animation_create_meta_box');
+add_action('mp_brick_ajax_metabox', 'mp_stacks_animation_create_meta_box');
+add_action('wp_ajax_mp_stacks_animation_metabox', 'mp_stacks_animation_create_meta_box');
