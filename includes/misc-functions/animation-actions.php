@@ -67,101 +67,86 @@ add_filter('mp_brick_background_content', 'mp_stacks_animation_animate_backgroun
  */
 function mp_stacks_animation_animate_content_types( $default_content_output, $post_id ){
 	
-	global $mp_stacks_animation_ct_number;
-	
 	$js_output = NULL;
+					
+	//Check if this brick is set to have Content-Type 1's WayPoint animation "on"
+	$ct_1_waypoint_animation_on = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct1_waypoint_animation_on', false );
 	
-	//If this is Content Type 1
-	if ( empty( $mp_stacks_animation_ct_number[$post_id] ) ){
-		$mp_stacks_animation_ct_number[$post_id] = 1;	
-				
-		//Check if this brick is set to have Content-Type 1's WayPoint animation "on"
-		$waypoint_animation_on = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct1_waypoint_animation_on', false );
+	//If the WayPoint animation is set to be "On"
+	if ( $ct_1_waypoint_animation_on ){
 		
-		//If the WayPoint animation is set to be "On"
-		if ( $waypoint_animation_on ){
-			
-			//Enqueue velocity JS
-			wp_enqueue_script( 'velocity_js', MP_CORE_JS_SCRIPTS_URL . 'velocity.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
-			
-			//Enqueue Waypoints JS
-			wp_enqueue_script( 'waypoints_js', MP_CORE_JS_SCRIPTS_URL . 'waypoints.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
-						
-			$waypoint_animation_repeater = mp_core_get_post_meta( $post_id, 'ct1_waypoint_animation_keyframes', array() );
+		//Enqueue velocity JS
+		wp_enqueue_script( 'velocity_js', MP_CORE_JS_SCRIPTS_URL . 'velocity.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
 		
-			$reverse_upon_out_of_view = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct1_waypoint_animation_reverse_upon_out', false );
-			
-			//Get JS output to animate this content type upon page load
-			$js_output .= mp_core_js_waypoint_animate( '#mp-brick-' . $post_id . '-first-content-type-container', $waypoint_animation_repeater, $reverse_upon_out_of_view ); 
-		}
-		
-		//Check if this brick is set to have Content-Type 1's MouseOver animation "on"
-		$mouseover_animation_on = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct1_mouseover_animation_on', false );
-		
-		//If the Mouse Over animation is set to be "On"
-		if ( $mouseover_animation_on ){
-			
-			//Enqueue velocity JS
-			wp_enqueue_script( 'velocity_js', MP_CORE_JS_SCRIPTS_URL . 'velocity.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
-			
-			//Enqueue Waypoints JS
-			wp_enqueue_script( 'waypoints_js', MP_CORE_JS_SCRIPTS_URL . 'waypoints.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
-			
-			$mouseover_animation_repeater = mp_core_get_post_meta( $post_id, 'ct1_mouseover_animation_keyframes', array() );
+		//Enqueue Waypoints JS
+		wp_enqueue_script( 'waypoints_js', MP_CORE_JS_SCRIPTS_URL . 'waypoints.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
 					
-			//Get JS output to animate this content type upon page load
-			$js_output .= mp_core_js_mouse_over_animate( '#mp-brick-' . $post_id . '-first-content-type-container', $mouseover_animation_repeater ); 
-		}
+		$waypoint_animation_repeater = mp_core_get_post_meta( $post_id, 'ct1_waypoint_animation_keyframes', array() );
+	
+		$reverse_upon_out_of_view = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct1_waypoint_animation_reverse_upon_out', false );
+		
+		//Get JS output to animate this content type upon page load
+		$js_output .= mp_core_js_waypoint_animate( '#mp-brick-' . $post_id . '-first-content-type-container', $waypoint_animation_repeater, $reverse_upon_out_of_view ); 
+	}
+	
+	//Check if this brick is set to have Content-Type 1's MouseOver animation "on"
+	$mouseover_animation_on = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct1_mouseover_animation_on', false );
+	
+	//If the Mouse Over animation is set to be "On"
+	if ( $mouseover_animation_on ){
+		
+		//Enqueue velocity JS
+		wp_enqueue_script( 'velocity_js', MP_CORE_JS_SCRIPTS_URL . 'velocity.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
+		
+		//Enqueue Waypoints JS
+		wp_enqueue_script( 'waypoints_js', MP_CORE_JS_SCRIPTS_URL . 'waypoints.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
+		
+		$mouseover_animation_repeater = mp_core_get_post_meta( $post_id, 'ct1_mouseover_animation_keyframes', array() );
 				
-		return $default_content_output . $js_output;
-		
+		//Get JS output to animate this content type upon page load
+		$js_output .= mp_core_js_mouse_over_animate( '#mp-brick-' . $post_id . '-first-content-type-container', $mouseover_animation_repeater ); 
 	}
-	//If this is Content Type 2
-	else{
-		$mp_stacks_animation_ct_number[$post_id] = 2;	
 		
-		//Check if this brick is set to have Content-Type 1's WayPoint animation "on"
-		$waypoint_animation_on = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct2_waypoint_animation_on', false );
+	//Check if this brick is set to have Content-Type 1's WayPoint animation "on"
+	$ct_2_waypoint_animation_on = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct2_waypoint_animation_on', false );
+	
+	//If the animation is not set to be "On", get out of here.
+	if ( $ct_2_waypoint_animation_on ){
 		
-		//If the animation is not set to be "On", get out of here.
-		if ( $waypoint_animation_on ){
-			
-			//Enqueue velocity JS
-			wp_enqueue_script( 'velocity_js', MP_CORE_JS_SCRIPTS_URL . 'velocity.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
-			
-			//Enqueue Waypoints JS
-			wp_enqueue_script( 'waypoints_js', MP_CORE_JS_SCRIPTS_URL . 'waypoints.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
-			
-			$waypoint_animation_repeater = mp_core_get_post_meta( $post_id, 'ct2_waypoint_animation_keyframes', array() );
-			
-			$reverse_upon_out_of_view = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct2_waypoint_animation_reverse_upon_out', false );
-						
-			//Get JS output to animate this content type upon page load
-			$js_output .= mp_core_js_waypoint_animate( '#mp-brick-' . $post_id . '-second-content-type-container', $waypoint_animation_repeater, $reverse_upon_out_of_view ); 
+		//Enqueue velocity JS
+		wp_enqueue_script( 'velocity_js', MP_CORE_JS_SCRIPTS_URL . 'velocity.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
 		
-		}
+		//Enqueue Waypoints JS
+		wp_enqueue_script( 'waypoints_js', MP_CORE_JS_SCRIPTS_URL . 'waypoints.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
 		
-		//Check if this brick is set to have Content-Type 1's MouseOver animation "on"
-		$mouseover_animation_on = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct2_mouseover_animation_on', false );
+		$waypoint_animation_repeater = mp_core_get_post_meta( $post_id, 'ct2_waypoint_animation_keyframes', array() );
 		
-		//If the Mouse Over animation is set to be "On"
-		if ( $mouseover_animation_on ){
-			
-			//Enqueue velocity JS
-			wp_enqueue_script( 'velocity_js', MP_CORE_JS_SCRIPTS_URL . 'velocity.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
-			
-			//Enqueue Waypoints JS
-			wp_enqueue_script( 'waypoints_js', MP_CORE_JS_SCRIPTS_URL . 'waypoints.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
-		
-			$mouseover_animation_repeater = mp_core_get_post_meta( $post_id, 'ct2_mouseover_animation_keyframes', array() );
+		$reverse_upon_out_of_view = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct2_waypoint_animation_reverse_upon_out', false );
 					
-			//Get JS output to animate this content type upon page load
-			$js_output .= mp_core_js_mouse_over_animate( '#mp-brick-' . $post_id . '-second-content-type-container', $mouseover_animation_repeater ); 
-		}
-			
-		return $default_content_output . $js_output;
-		
+		//Get JS output to animate this content type upon page load
+		$js_output .= mp_core_js_waypoint_animate( '#mp-brick-' . $post_id . '-second-content-type-container', $waypoint_animation_repeater, $reverse_upon_out_of_view ); 
+	
 	}
+	
+	//Check if this brick is set to have Content-Type 1's MouseOver animation "on"
+	$mouseover_animation_on = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct2_mouseover_animation_on', false );
+	
+	//If the Mouse Over animation is set to be "On"
+	if ( $mouseover_animation_on ){
+		
+		//Enqueue velocity JS
+		wp_enqueue_script( 'velocity_js', MP_CORE_JS_SCRIPTS_URL . 'velocity.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
+		
+		//Enqueue Waypoints JS
+		wp_enqueue_script( 'waypoints_js', MP_CORE_JS_SCRIPTS_URL . 'waypoints.min.js', array( 'jquery' ), MP_STACKS_ANIMATION_VERSION );
+	
+		$mouseover_animation_repeater = mp_core_get_post_meta( $post_id, 'ct2_mouseover_animation_keyframes', array() );
+				
+		//Get JS output to animate this content type upon page load
+		$js_output .= mp_core_js_mouse_over_animate( '#mp-brick-' . $post_id . '-second-content-type-container', $mouseover_animation_repeater ); 
+	}
+		
+	return $default_content_output . $js_output;
 		
 }
 add_filter('mp_stacks_brick_meta_output', 'mp_stacks_animation_animate_content_types', 10, 2 );
