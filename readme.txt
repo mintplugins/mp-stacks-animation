@@ -3,8 +3,8 @@ Contributors: johnstonphilip
 Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.6
-Tested up to: 4.3
-Stable tag: 1.0.0.3
+Tested up to: 4.6
+Stable tag: 1.0.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,9 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 
 == Changelog ==
+
+= 1.0.0.4 = September 20, 2016
+* Move all animation js output to footer using $mp_stacks_footer_inline_js
 
 = 1.0.0.3 = November 12, 2015
 * Fixes bug where second content-type animation wasn't being executed

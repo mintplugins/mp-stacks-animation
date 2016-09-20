@@ -3,7 +3,7 @@
 Plugin Name: MP Stacks + Animation
 Plugin URI: http://mintplugins.com
 Description: Add animation to Content-Types in MP Stacks.
-Version: 1.0.0.3
+Version: 1.0.0.4
 Author: Mint Plugins
 Author URI: http://mintplugins.com
 Text Domain: mp_stacks_animation
@@ -34,7 +34,7 @@ License: GPL2
 */
 // Plugin version
 if( !defined( 'MP_STACKS_ANIMATION_VERSION' ) )
-	define( 'MP_STACKS_ANIMATION_VERSION', '1.0.0.3' );
+	define( 'MP_STACKS_ANIMATION_VERSION', '1.0.0.4' );
 
 // Plugin Folder URL
 if( !defined( 'MP_STACKS_ANIMATION_PLUGIN_URL' ) )
