@@ -24,19 +24,18 @@ function mp_stacks_animation_animate_background( $default_content_output, $post_
 		
 		//Disable any Shadows because they lag in the browser
 		$animation_js_output .= '
-			<script type="text/javascript">
 				
-				var mp_stacks_shadows_active;
-								
-				jQuery(document).ready(function($){ 
-					$( ".mp-stacks-shadows-css-tag" ).remove();
-					mp_stacks_shadows_active = false;
-				});
+		var mp_stacks_shadows_active;
+						
+		jQuery(document).ready(function($){ 
+			$( ".mp-stacks-shadows-css-tag" ).remove();
+			mp_stacks_shadows_active = false;
+		});
 			
-			</script>';
+		';
 		
 		//Get JS output to animate this content type upon page load
-		$animation_js_output .= mp_core_js_waypoint_animate_child( '#mp-brick-' . $post_id , '.mp-brick-bg-inner', $waypoint_animation_repeater, $reverse_upon_out_of_view ); 
+		$animation_js_output .= mp_core_js_waypoint_animate_child( '#mp-brick-' . $post_id , '.mp-brick-bg-inner', $waypoint_animation_repeater, $reverse_upon_out_of_view, false ); 
 	}
 	
 	//Check if this brick is set to have Content-Type 1's MouseOver animation "on"
@@ -54,10 +53,14 @@ function mp_stacks_animation_animate_background( $default_content_output, $post_
 		$mouseover_animation_repeater = mp_core_get_post_meta( $post_id, 'bg_mouseover_animation_keyframes', array() );
 				
 		//Get JS output to animate this content type upon page load
-		$animation_js_output .= mp_core_js_mouse_over_animate_child( '#mp-brick-' . $post_id, ' .mp-brick-bg-inner', $mouseover_animation_repeater, true, true, 'mp-brick-' . $post_id ); 
+		$animation_js_output .= mp_core_js_mouse_over_animate_child( '#mp-brick-' . $post_id, ' .mp-brick-bg-inner', $mouseover_animation_repeater, true, false, 'mp-brick-' . $post_id ); 
 	}
+	
+	//Pull in the existing MP Stacks inline js string which is output the Footer.
+	global $mp_stacks_footer_inline_js;
+	$mp_stacks_footer_inline_js[ 'mp-stacks-animation-js-background-' . $post_id ] = $animation_js_output;
 		
-	return $default_content_output . $animation_js_output;
+	return $default_content_output;
 		
 }
 add_filter('mp_brick_background_content', 'mp_stacks_animation_animate_background', 11, 3);
@@ -86,7 +89,7 @@ function mp_stacks_animation_animate_content_types( $default_content_output, $po
 		$reverse_upon_out_of_view = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct1_waypoint_animation_reverse_upon_out', false );
 		
 		//Get JS output to animate this content type upon page load
-		$js_output .= mp_core_js_waypoint_animate( '#mp-brick-' . $post_id . '-first-content-type-container', $waypoint_animation_repeater, $reverse_upon_out_of_view ); 
+		$js_output .= mp_core_js_waypoint_animate( '#mp-brick-' . $post_id . '-first-content-type-container', $waypoint_animation_repeater, $reverse_upon_out_of_view, false ); 
 	}
 	
 	//Check if this brick is set to have Content-Type 1's MouseOver animation "on"
@@ -124,7 +127,7 @@ function mp_stacks_animation_animate_content_types( $default_content_output, $po
 		$reverse_upon_out_of_view = mp_core_get_post_meta_checkbox( $post_id, 'brick_ct2_waypoint_animation_reverse_upon_out', false );
 					
 		//Get JS output to animate this content type upon page load
-		$js_output .= mp_core_js_waypoint_animate( '#mp-brick-' . $post_id . '-second-content-type-container', $waypoint_animation_repeater, $reverse_upon_out_of_view ); 
+		$js_output .= mp_core_js_waypoint_animate( '#mp-brick-' . $post_id . '-second-content-type-container', $waypoint_animation_repeater, $reverse_upon_out_of_view, false ); 
 	
 	}
 	
@@ -143,10 +146,14 @@ function mp_stacks_animation_animate_content_types( $default_content_output, $po
 		$mouseover_animation_repeater = mp_core_get_post_meta( $post_id, 'ct2_mouseover_animation_keyframes', array() );
 				
 		//Get JS output to animate this content type upon page load
-		$js_output .= mp_core_js_mouse_over_animate( '#mp-brick-' . $post_id . '-second-content-type-container', $mouseover_animation_repeater ); 
+		$js_output .= mp_core_js_mouse_over_animate( '#mp-brick-' . $post_id . '-second-content-type-container', $mouseover_animation_repeater, true, false ); 
 	}
-		
-	return $default_content_output . $js_output;
+	
+	//Pull in the existing MP Stacks inline js string which is output the Footer.
+	global $mp_stacks_footer_inline_js;
+	$mp_stacks_footer_inline_js[ 'mp-stacks-animation-content-types-' . $post_id ] = $js_output;
+			
+	return $default_content_output;
 		
 }
 add_filter('mp_stacks_brick_meta_output', 'mp_stacks_animation_animate_content_types', 10, 2 );
